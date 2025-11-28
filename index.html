@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="pastel">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sicherer Passwort Generator | Kostenlos &amp; Offline | Starke Passwörter erstellen</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Generiere kryptographisch sichere Passwörter kostenlos und offline. Mit Entropie-Anzeige, QR-Code Export und anpassbaren Zeichentypen. Keine Daten werden übertragen.">
+    <meta name="keywords" content="Passwort Generator, Password Generator, sichere Passwörter, Passwort erstellen, Zufallspasswort, Kennwort Generator, starkes Passwort, Passwort Sicherheit, Online Passwort Generator, kostenlos">
+    <meta name="author" content="Password Generator App">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Sicherer Passwort Generator | Kostenlos &amp; Offline">
+    <meta property="og:description" content="Generiere kryptographisch sichere Passwörter mit Entropie-Anzeige und QR-Code Export. 100% lokal, keine Datenübertragung.">
+    <meta property="og:locale" content="de_DE">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Sicherer Passwort Generator | Kostenlos &amp; Offline">
+    <meta name="twitter:description" content="Generiere kryptographisch sichere Passwörter mit Entropie-Anzeige und QR-Code Export. 100% lokal.">
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#a991f7">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Sicherer Passwort Generator",
+        "description": "Kostenloser Online Passwort Generator mit kryptographisch sicherer Zufallsgenerierung.",
+        "applicationCategory": "SecurityApplication",
+        "operatingSystem": "Any",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "EUR"
+        }
+    }
+    </script>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daisyui@5/daisyui.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body>
+    <div id="app"></div>
+
+    <script type="module">
+        import { compile } from 'https://esm.sh/svelte@4/compiler';
+        import QRCode from 'https://esm.sh/qrcode@1.5.3';
+        
+        // QRCode global verfügbar machen für Svelte
+        window.QRCode = QRCode;
+
+        const svelteCode = `
+<script>
+    import { onMount } from 'svelte';
+    
+    // State
+    let length = 64;
+    let useUppercase = true;
+    let useLowercase = true;
+    let useNumbers = true;
+    let useSymbols = false;
+    let password = '';
+    let copied = false;
+    let error = '';
+    let isDark = false;
+    let showQR = false;
+    let qrDataUrl = '';
+
+    // Character sets
+    const LOWERCASE = 'abcdefghijklmnopqrstuvwxyz';
+    const UPPERCASE = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const NUMBERS = '0123456789';
+    const SYMBOLS = '!@#$%^&*()_-+=[]{};:,.<>?/|~';
+
+    // Reactive entropy calculation (basiert auf length, nicht password.length für sofortige Updates)
+    $: poolSize = (useLowercase ? 26 : 0) + (useUppercase ? 26 : 0) + (useNumbers ? 10 : 0) + (useSymbols ? 28 : 0);
+    $: entropyBits = poolSize > 0 && length > 0 ? Math.floor(length * Math.log2(poolSize)) : 0;
+    $: entropyPercent = Math.min(100, (entropyBits / 128) * 100);
+    $: entropyLabel = entropyBits >= 128 ? 'Exzellent' : entropyBits >= 80 ? 'Stark' : entropyBits >= 60 ? 'Gut' : entropyBits >= 40 ? 'Moderat' : 'Schwach';
+    $: entropyEmoji = entropyBits >= 128 ? '🛡️' : entropyBits >= 80 ? '💪' : entropyBits >= 60 ? '👍' : entropyBits >= 40 ? '⚠️' : '❌';
+    $: barColor = entropyBits >= 128 ? '#22c55e' : entropyBits >= 80 ? '#3b82f6' : entropyBits >= 60 ? '#a855f7' : entropyBits >= 40 ? '#eab308' : '#ef4444';
+
+    // Secure random index (rejection sampling)
+    function secureRandomIndex(max) {
+        const limit = Math.floor(0xFFFFFFFF / max) * max;
+        let val;
+        do {
+            const arr = new Uint32Array(1);
+            crypto.getRandomValues(arr);
+            val = arr[0];
+        } while (val >= limit);
+        return val % max;
+    }
+
+    // Fisher-Yates shuffle with CSPRNG
+    function secureShuffle(arr) {
+        const result = [...arr];
+        for (let i = result.length - 1; i > 0; i--) {
+            const j = secureRandomIndex(i + 1);
+            [result[i], result[j]] = [result[j], result[i]];
+        }
+        return result;
+    }
+
+    // Generate password
+    function generate() {
+        copied = false;
+        showQR = false;
+        
+        const categories = [];
+        if (useLowercase) categories.push(LOWERCASE);
+        if (useUppercase) categories.push(UPPERCASE);
+        if (useNumbers) categories.push(NUMBERS);
+        if (useSymbols) categories.push(SYMBOLS);
+
+        if (categories.length === 0) {
+            error = 'Bitte mindestens eine Zeichenkategorie auswählen!';
+            password = '';
+            return;
+        }
+
+        error = '';
+        const len = Math.max(4, Math.min(256, parseInt(length) || 64));
+        const charset = categories.join('');
+        
+        let chars = [];
+        
+        // Guarantee at least one char from each category
+        for (const cat of categories) {
+            chars.push(cat[secureRandomIndex(cat.length)]);
+        }
+        
+        // Fill rest
+        for (let i = chars.length; i < len; i++) {
+            chars.push(charset[secureRandomIndex(charset.length)]);
+        }
+        
+        // Shuffle
+        chars = secureShuffle(chars);
+        password = chars.join('');
+    }
+
+    // Copy to clipboard
+    async function copy() {
+        if (!password) return;
+        try {
+            await navigator.clipboard.writeText(password);
+            copied = true;
+            setTimeout(() => { copied = false; }, 2000);
+        } catch (e) {
+            error = 'Kopieren fehlgeschlagen';
+        }
+    }
+
+    // Generate QR code
+    async function makeQR() {
+        if (!password) return;
+        try {
+            qrDataUrl = await window.QRCode.toDataURL(password, {
+                width: 200,
+                margin: 2,
+                color: { dark: '#000000', light: '#ffffff' }
+            });
+            showQR = true;
+        } catch (e) {
+            error = 'QR-Code Generierung fehlgeschlagen';
+        }
+    }
+
+    // Toggle theme
+    function toggleTheme() {
+        isDark = !isDark;
+        document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'pastel');
+    }
+
+    // Auto-generate on setting change
+    $: {
+        length;
+        useUppercase;
+        useLowercase;
+        useNumbers;
+        useSymbols;
+        generate();
+    }
+
+    onMount(() => {
+        generate();
+    });
+<\/script>
+
+<main class="min-h-screen bg-base-200 py-8 px-4">
+    <div class="max-w-2xl mx-auto flex flex-col gap-8">
+        
+        <!-- Generator Card -->
+        <article class="card bg-base-100 shadow-xl rounded">
+            <div class="card-body p-8">
+                
+                <!-- Header -->
+                <header class="flex justify-between items-center mb-6">
+                    <div>
+                        <h1 class="text-2xl font-bold text-base-content">🔐 Password Generator</h1>
+                        <p class="text-base-content/60 text-sm mt-1">Sichere Passwörter mit konfigurierbarer Länge und Zeichentypen.</p>
+                    </div>
+                    <button type="button" on:click={toggleTheme} class="btn btn-circle btn-ghost btn-sm" aria-label="Theme wechseln">
+                        {#if isDark}
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+                        {:else}
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
+                        {/if}
+                    </button>
+                </header>
+
+                <hr class="border-base-300 mb-6">
+
+                <!-- Settings -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-6">
+                    
+                    <!-- Length -->
+                    <div>
+                        <div class="flex justify-between items-center mb-3">
+                            <label for="length-range" class="text-sm font-medium text-base-content">Passwortlänge</label>
+                            <span class="badge badge-primary badge-soft">{length} Zeichen</span>
+                        </div>
+                        <input type="range" id="length-range" min="4" max="256" bind:value={length} class="range range-primary range-sm w-full">
+                        <div class="flex justify-between text-xs text-base-content/50 px-1 mt-2">
+                            <span>4</span>
+                            <span>64</span>
+                            <span>128</span>
+                            <span>256</span>
+                        </div>
+                        <input type="number" bind:value={length} min="4" max="256" class="input input-bordered input-sm mt-3 w-20 rounded" aria-label="Passwortlänge">
+                    </div>
+
+                    <!-- Character types -->
+                    <fieldset>
+                        <legend class="text-sm font-medium text-base-content mb-3">Zeichentypen</legend>
+                        <div class="space-y-3">
+                            <label class="flex items-center gap-3 cursor-pointer">
+                                <input type="checkbox" bind:checked={useUppercase} class="checkbox checkbox-primary checkbox-sm rounded">
+                                <span class="text-sm">Großbuchstaben (A-Z)</span>
+                            </label>
+                            <label class="flex items-center gap-3 cursor-pointer">
+                                <input type="checkbox" bind:checked={useLowercase} class="checkbox checkbox-primary checkbox-sm rounded">
+                                <span class="text-sm">Kleinbuchstaben (a-z)</span>
+                            </label>
+                            <label class="flex items-center gap-3 cursor-pointer">
+                                <input type="checkbox" bind:checked={useNumbers} class="checkbox checkbox-primary checkbox-sm rounded">
+                                <span class="text-sm">Ziffern (0-9)</span>
+                            </label>
+                            <label class="flex items-center gap-3 cursor-pointer">
+                                <input type="checkbox" bind:checked={useSymbols} class="checkbox checkbox-secondary checkbox-sm rounded">
+                                <span class="text-sm">Symbole (!@#$%^&amp;*)</span>
+                            </label>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <!-- Error -->
+                {#if error}
+                    <div class="alert alert-error rounded mb-6" role="alert">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-5 w-5" fill="none" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        <span class="text-sm">{error}</span>
+                    </div>
+                {/if}
+
+                <hr class="border-base-300 mb-6">
+
+                <!-- Password output -->
+                <section>
+                    <div class="flex justify-between items-center mb-4">
+                        <label for="password-output" class="text-sm font-medium text-base-content">Generiertes Passwort</label>
+                        <span class="badge badge-secondary badge-soft">{password.length} Zeichen</span>
+                    </div>
+                    <textarea 
+                        id="password-output"
+                        readonly 
+                        on:click={copy} 
+                        class="textarea textarea-bordered w-full font-mono text-base leading-relaxed bg-base-200/50 rounded p-4 h-32 resize-none border-2 border-base-300 cursor-pointer hover:border-primary transition-colors"
+                        placeholder="Passwort wird generiert..."
+                        aria-label="Generiertes Passwort - Klicken zum Kopieren"
+                    >{password}</textarea>
+                    
+                    <!-- Entropy display -->
+                    <div class="mt-4 p-4 bg-base-200/50 rounded">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-sm font-medium">Sicherheit (Entropie)</span>
+                            <span class="text-sm font-bold" style="color: {barColor}">{entropyBits} bits</span>
+                        </div>
+                        <div class="w-full bg-base-300 rounded-full h-3 overflow-hidden">
+                            <div class="h-full rounded-full transition-all duration-300" style="width: {entropyPercent}%; background-color: {barColor}"></div>
+                        </div>
+                        <div class="flex justify-between items-center mt-2">
+                            <span class="text-xs text-base-content/60">{entropyEmoji} {entropyLabel}</span>
+                            <span class="text-xs text-base-content/40">{poolSize} Zeichen im Pool</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Buttons -->
+                <div class="flex flex-wrap gap-2 mt-5">
+                    <button type="button" on:click={generate} class="btn btn-sm btn-primary flex-1 rounded gap-1.5">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
+                        Neu generieren
+                    </button>
+                    <button type="button" on:click={copy} class="btn btn-sm rounded gap-1.5" class:btn-success={copied} class:btn-secondary={!copied}>
+                        {#if copied}
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                            Kopiert!
+                        {:else}
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                            Kopieren
+                        {/if}
+                    </button>
+                    <button type="button" on:click={makeQR} class="btn btn-sm btn-accent rounded gap-1.5">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" /></svg>
+                        QR
+                    </button>
+                </div>
+
+                <!-- QR Code -->
+                {#if showQR}
+                    <div class="mt-6 p-4 bg-base-200/50 rounded flex flex-col items-center">
+                        <div class="flex justify-between items-center w-full mb-3">
+                            <span class="text-sm font-medium">QR-Code (offline scannen)</span>
+                            <button type="button" on:click={() => showQR = false} class="btn btn-ghost btn-xs btn-circle" aria-label="QR-Code schließen">✕</button>
+                        </div>
+                        <div class="bg-white p-3 rounded">
+                            <img src={qrDataUrl} alt="QR-Code mit Passwort" width="192" height="192">
+                        </div>
+                        <p class="text-xs text-base-content/40 mt-2 text-center">Scanne mit deinem Handy für sichere Offline-Übertragung</p>
+                    </div>
+                {/if}
+
+                <!-- Footer -->
+                <footer class="text-center mt-6">
+                    <p class="text-xs text-base-content/40">
+                        Lokal generiert · Nutzt <code class="bg-base-200 px-1.5 py-0.5 rounded text-xs">crypto.getRandomValues()</code>
+                    </p>
+                </footer>
+            </div>
+        </article>
+
+        <!-- FAQ Accordion -->
+        <section class="w-full" aria-labelledby="faq-heading">
+            <h2 id="faq-heading" class="text-lg font-semibold text-base-content mb-4">📚 Wissenswertes über sichere Passwörter</h2>
+            
+            <div class="join join-vertical w-full rounded bg-base-100 shadow-lg">
+                <details class="collapse collapse-arrow join-item border border-base-300">
+                    <summary class="collapse-title font-medium cursor-pointer">Was macht ein Passwort sicher?</summary>
+                    <div class="collapse-content text-sm text-base-content/70">
+                        <p>Ein sicheres Passwort zeichnet sich durch drei Hauptmerkmale aus: <strong>Länge</strong> (mindestens 12-16 Zeichen), <strong>Komplexität</strong> (Groß- und Kleinbuchstaben, Zahlen, Sonderzeichen) und <strong>Zufälligkeit</strong> (keine Wörter, Namen oder Muster). Je länger und zufälliger, desto besser.</p>
+                    </div>
+                </details>
+                
+                <details class="collapse collapse-arrow join-item border border-base-300">
+                    <summary class="collapse-title font-medium cursor-pointer">Was bedeutet Entropie bei Passwörtern?</summary>
+                    <div class="collapse-content text-sm text-base-content/70">
+                        <p><strong>Entropie</strong> misst die Unvorhersagbarkeit eines Passworts in Bits. Je höher die Entropie, desto mehr Versuche braucht ein Angreifer. Richtwerte: 40 Bits = schwach, 60 Bits = gut, 80 Bits = stark, 128+ Bits = exzellent (unknackbar).</p>
+                    </div>
+                </details>
+                
+                <details class="collapse collapse-arrow join-item border border-base-300">
+                    <summary class="collapse-title font-medium cursor-pointer">Warum ist dieser Generator sicher?</summary>
+                    <div class="collapse-content text-sm text-base-content/70">
+                        <p>Wir nutzen <strong>crypto.getRandomValues()</strong> - die kryptographisch sichere Zufallsquelle deines Betriebssystems. Zusätzlich verwenden wir <strong>Rejection Sampling</strong> um Modulo-Bias zu eliminieren. Alles läuft 100% lokal - keine Daten werden übertragen.</p>
+                    </div>
+                </details>
+                
+                <details class="collapse collapse-arrow join-item border border-base-300">
+                    <summary class="collapse-title font-medium cursor-pointer">Wie lang sollte mein Passwort sein?</summary>
+                    <div class="collapse-content text-sm text-base-content/70">
+                        <p>Empfehlung: <strong>12-16 Zeichen</strong> für normale Accounts, <strong>20+ Zeichen</strong> für wichtige Accounts (E-Mail, Banking), <strong>32+ Zeichen</strong> für Master-Passwörter. Mit einem Passwort-Manager kannst du problemlos 64+ Zeichen verwenden.</p>
+                    </div>
+                </details>
+                
+                <details class="collapse collapse-arrow join-item border border-base-300">
+                    <summary class="collapse-title font-medium cursor-pointer">Sollte ich Sonderzeichen verwenden?</summary>
+                    <div class="collapse-content text-sm text-base-content/70">
+                        <p><strong>Ja, wenn möglich!</strong> Sonderzeichen erhöhen die Zeichenpool-Größe erheblich. Allerdings: Ein längeres Passwort ohne Sonderzeichen kann sicherer sein als ein kurzes mit Sonderzeichen.</p>
+                    </div>
+                </details>
+                
+                <details class="collapse collapse-arrow join-item border border-base-300">
+                    <summary class="collapse-title font-medium cursor-pointer">Wozu dient der QR-Code?</summary>
+                    <div class="collapse-content text-sm text-base-content/70">
+                        <p>Der QR-Code ermöglicht <strong>sichere Offline-Übertragung</strong> auf andere Geräte. Statt das Passwort über unsichere Kanäle zu kopieren, scannst du einfach den QR-Code mit deinem Handy.</p>
+                    </div>
+                </details>
+            </div>
+            
+            <p class="text-xs text-base-content/40 text-center mt-6">
+                💡 Tipp: Nutze einen Passwort-Manager um deine sicheren Passwörter zu speichern.
+            </p>
+        </section>
+
+        <!-- Password Manager Recommendations (compact) -->
+        <section class="w-full" aria-labelledby="pm-heading">
+            <h2 id="pm-heading" class="text-sm font-medium text-base-content/70 mb-3">🔑 Empfohlene Passwort-Manager</h2>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+                
+                <!-- 1Password -->
+                <a href="https://1password.com" target="_blank" rel="noopener noreferrer" class="card bg-base-100 shadow-sm hover:shadow-md transition-all rounded border border-base-300/50">
+                    <div class="card-body items-center text-center p-3">
+                        <div class="w-10 h-10 mb-1.5 flex items-center justify-center">
+                            <svg viewBox="0 0 24 24" class="w-8 h-8" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <rect width="24" height="24" rx="6" fill="#0094F5"/>
+                                <path d="M12 5.5C8.41 5.5 5.5 8.41 5.5 12C5.5 15.59 8.41 18.5 12 18.5C15.59 18.5 18.5 15.59 18.5 12C18.5 8.41 15.59 5.5 12 5.5ZM12 7C12.55 7 13 7.45 13 8V12C13 12.55 12.55 13 12 13C11.45 13 11 12.55 11 12V8C11 7.45 11.45 7 12 7ZM12 15C11.45 15 11 15.45 11 16C11 16.55 11.45 17 12 17C12.55 17 13 16.55 13 16C13 15.45 12.55 15 12 15Z" fill="white"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xs font-semibold text-base-content">1Password</h3>
+                    </div>
+                </a>
+
+                <!-- NordPass -->
+                <a href="https://nordpass.com" target="_blank" rel="noopener noreferrer" class="card bg-base-100 shadow-sm hover:shadow-md transition-all rounded border border-base-300/50">
+                    <div class="card-body items-center text-center p-3">
+                        <div class="w-10 h-10 mb-1.5 flex items-center justify-center">
+                            <svg viewBox="0 0 24 24" class="w-8 h-8" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <rect width="24" height="24" rx="6" fill="#4BB543"/>
+                                <path d="M7 8L12 16L17 8H14.5L12 12.5L9.5 8H7Z" fill="white"/>
+                                <circle cx="12" cy="7" r="2" fill="white"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xs font-semibold text-base-content">NordPass</h3>
+                    </div>
+                </a>
+
+                <!-- LastPass -->
+                <a href="https://lastpass.com" target="_blank" rel="noopener noreferrer" class="card bg-base-100 shadow-sm hover:shadow-md transition-all rounded border border-base-300/50">
+                    <div class="card-body items-center text-center p-3">
+                        <div class="w-10 h-10 mb-1.5 flex items-center justify-center">
+                            <svg viewBox="0 0 24 24" class="w-8 h-8" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <rect width="24" height="24" rx="6" fill="#D32D27"/>
+                                <ellipse cx="12" cy="12" rx="5" ry="6" fill="white"/>
+                                <ellipse cx="12" cy="12" rx="2.5" ry="3" fill="#D32D27"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xs font-semibold text-base-content">LastPass</h3>
+                    </div>
+                </a>
+
+                <!-- Bitwarden -->
+                <a href="https://bitwarden.com" target="_blank" rel="noopener noreferrer" class="card bg-base-100 shadow-sm hover:shadow-md transition-all rounded border border-base-300/50">
+                    <div class="card-body items-center text-center p-3">
+                        <div class="w-10 h-10 mb-1.5 flex items-center justify-center">
+                            <svg viewBox="0 0 24 24" class="w-8 h-8" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <rect width="24" height="24" rx="6" fill="#175DDC"/>
+                                <path d="M12 4L4 8v8l8 4 8-4V8l-8-4zm0 2.18l6 3v5.64l-6 3-6-3V9.18l6-3z" fill="white"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xs font-semibold text-base-content">Bitwarden</h3>
+                    </div>
+                </a>
+
+            </div>
+        </section>
+
+    </div>
+</main>
+`;
+
+        async function initApp() {
+            try {
+                const { js } = compile(svelteCode, {
+                    generate: 'dom',
+                    name: 'App',
+                    sveltePath: 'https://esm.sh/svelte@4'
+                });
+
+                const modifiedCode = js.code
+                    .replace(/from\s+["']svelte["']/g, 'from "https://esm.sh/svelte@4"')
+                    .replace(/from\s+["']svelte\/internal["']/g, 'from "https://esm.sh/svelte@4/internal"');
+
+                const blob = new Blob([modifiedCode], { type: 'application/javascript' });
+                const moduleUrl = URL.createObjectURL(blob);
+                const module = await import(moduleUrl);
+                
+                new module.default({
+                    target: document.getElementById('app')
+                });
+
+                URL.revokeObjectURL(moduleUrl);
+            } catch (e) {
+                console.error('Svelte compilation error:', e);
+                document.getElementById('app').innerHTML = '<div class="p-8 text-red-500">Fehler beim Laden: ' + e.message + '</div>';
+            }
+        }
+
+        initApp();
+    </script>
+</body>
+</html>
