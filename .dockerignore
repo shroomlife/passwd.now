@@ -1,17 +1,36 @@
-.cursor
-node_modules
+# Git & Version Control
 .git
 .gitignore
-CLAUDE.md
+
+# IDE & Editor
+.cursor
+
+# Dependencies
+node_modules
+
+# Dokumentation
 *.md
 README.*
-*.min.html
-.env
-.DS_Store
-Thumbs.db
-.github
+CLAUDE.md
 OPTIMIZATIONS.md
+
+# Build-Artefakte
+*.min.html
+
+# Docker-Konfiguration
 .dockerignore
 Dockerfile
 compose.yml
+
+# Environment & Secrets
+.env
+
+# OS-spezifische Dateien
+.DS_Store
+Thumbs.db
+
+# CI/CD
+.github
+
+# Node.js Konfiguration
 package.json
