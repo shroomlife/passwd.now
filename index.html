@@ -1,32 +1,41 @@
 <!DOCTYPE html>
 <html lang="de" data-theme="pastel">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Passwort Generator - Kostenlos &amp; Sicher | Generate Password Online</title>
-    
+
     <!-- SEO Meta Tags -->
-    <meta name="description" content="Passwort Generator: Generiere sichere Passwörter kostenlos online. Generate password mit kryptographisch sicherer Zufallsgenerierung. 100% offline, keine Datenübertragung.">
-    <meta name="keywords" content="passwort generator, generate password, password generator, passwort erstellen, sichere passwörter, online passwort generator, kostenlos passwort generator, passwort generieren, sicherer passwort generator, zufallspasswort, kennwort generator, starkes passwort, passwort sicherheit">
+    <meta name="description"
+        content="Passwort Generator: Generiere sichere Passwörter kostenlos online. Generate password mit kryptographisch sicherer Zufallsgenerierung. 100% offline, keine Datenübertragung.">
+    <meta name="keywords"
+        content="passwort generator, generate password, password generator, passwort erstellen, sichere passwörter, online passwort generator, kostenlos passwort generator, passwort generieren, sicherer passwort generator, zufallspasswort, kennwort generator, starkes passwort, passwort sicherheit">
     <meta name="author" content="Password Generator App">
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
     <!-- Canonical URL: Wenn Domain bekannt, hier hinzufügen: <link rel="canonical" href="https://example.com/"> -->
-    
+
     <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="Passwort Generator - Kostenlos &amp; Sicher | Generate Password">
-    <meta property="og:description" content="Passwort Generator: Generiere sichere Passwörter kostenlos online. Generate password mit kryptographisch sicherer Zufallsgenerierung. 100% offline, keine Datenübertragung.">
+    <meta property="og:description"
+        content="Passwort Generator: Generiere sichere Passwörter kostenlos online. Generate password mit kryptographisch sicherer Zufallsgenerierung. 100% offline, keine Datenübertragung.">
     <meta property="og:locale" content="de_DE">
     <meta property="og:locale:alternate" content="en_US">
-    
+
     <!-- Twitter -->
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Passwort Generator - Kostenlos &amp; Sicher | Generate Password">
-    <meta name="twitter:description" content="Passwort Generator: Generiere sichere Passwörter kostenlos online. Generate password sicher und offline.">
-    
+    <meta name="twitter:description"
+        content="Passwort Generator: Generiere sichere Passwörter kostenlos online. Generate password sicher und offline.">
+
     <!-- Theme Color -->
     <meta name="theme-color" content="#a991f7">
-    
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+
     <!-- Structured Data -->
     <script type="application/ld+json">
     {
@@ -53,7 +62,7 @@
         ]
     }
     </script>
-    
+
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -110,7 +119,7 @@
         ]
     }
     </script>
-    
+
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -145,17 +154,18 @@
         ]
     }
     </script>
-    
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daisyui@5/daisyui.css">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
+
 <body>
     <div id="app"></div>
 
     <script type="module">
         import { compile } from 'https://esm.sh/svelte@4/compiler';
         import QRCode from 'https://esm.sh/qrcode@1.5.3';
-        
+
         // QRCode global verfügbar machen für Svelte
         window.QRCode = QRCode;
 
@@ -303,8 +313,31 @@
         
         <!-- Hero Section -->
         <header class="text-center mb-4">
-            <h1 class="text-3xl md:text-4xl font-bold text-base-content mb-3">
-                🔐 Passwort Generator
+            <h1 class="text-3xl md:text-4xl font-bold text-base-content mb-3 flex gap-2 items-center justify-center">
+                <svg width="48" height="48" viewBox="0 0 820 820" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M66.2393 222.785L66.2767 139.29C66.256 127.019 65.6072 114.524 66.3712 102.33C66.695 97.1665 73.0796 92.3358 78.1283 92.2746C86.9034 92.1687 95.6836 92.2455 104.462 92.2704L156.286 92.3493L316.939 92.2081L593.432 92.34L685.469 92.1998C703.011 92.1313 720.578 92.0348 738.13 92.0255C742.299 91.8168 746.136 92.8714 749.152 95.894C750.894 97.6399 753.127 101.27 753.321 103.766C754.242 115.689 753.795 128.281 753.794 140.217L753.481 223.744L753.209 539.075C753.372 579.642 753.323 620.209 753.061 660.776C752.999 677.585 753.147 694.46 753.099 711.263C752.748 714.347 753.154 718.84 751.212 721.377C750.893 721.733 750.573 722.089 750.252 722.446C747.52 726 742.701 727.978 738.192 728.063C726.15 728.288 714.042 728.218 701.977 728.228L634.935 728.3L425.481 728.272L195.008 728.245L118.634 728.3C105.862 728.31 93.1416 728.364 80.3143 728.272C74.5099 728.23 66.6109 723.031 66.3203 716.609C66.0484 710.606 66.1978 704.461 66.2196 698.449L66.2912 666.288L66.3141 560.068L66.2393 222.785Z" fill="#26B363"/>
+<path d="M66.2393 222.785L66.2767 139.29C66.256 127.019 65.6072 114.524 66.3712 102.33C66.695 97.1665 73.0796 92.3358 78.1283 92.2746C86.9034 92.1687 95.6836 92.2455 104.462 92.2704L156.286 92.3493L316.939 92.2081L593.432 92.34L685.469 92.1998C703.011 92.1313 720.578 92.0348 738.13 92.0255C742.299 91.8168 746.136 92.8714 749.152 95.894C750.894 97.6399 753.127 101.27 753.321 103.766C754.242 115.689 753.795 128.281 753.794 140.217L753.481 223.744C678.812 224.888 602.345 223.285 527.468 223.359C373.725 223.954 219.98 223.762 66.2393 222.785Z" fill="#017DFD"/>
+<path d="M472.906 119.209C488.476 118.854 505.66 119.304 521.377 119.336L616.378 119.405L680.025 119.417C691.611 119.401 703.39 119.259 714.966 119.521C718.219 119.595 719.779 120.371 722.417 121.953C724.904 123.445 728.855 129.537 728.882 132.158C729.001 143.71 730.344 176.552 728.673 186.376C728.202 189.003 727.096 191.476 725.451 193.577C722.788 197.012 719.636 198.4 715.484 199.027L555.202 199.093L499.663 199.041C490.306 199.029 480.552 199.23 471.208 198.797C468.602 198.676 465.847 197.367 463.742 195.823C460.875 193.714 458.983 190.533 458.497 187.006C456.408 170.974 458.915 148.582 458.551 132.1C458.408 125.632 466.619 119.885 472.906 119.209Z" fill="#FAF9FB"/>
+<path d="M212.742 128.777C225.919 126.921 238.14 135.999 240.17 149.149C242.2 162.299 233.286 174.64 220.164 176.846C211.52 178.299 202.761 174.987 197.241 168.176C191.72 161.367 190.291 152.114 193.502 143.956C196.711 135.798 204.062 129.999 212.742 128.777Z" fill="#FAF9FB"/>
+<path d="M302.803 128.746C316.083 127.481 327.904 137.148 329.297 150.415C330.691 163.681 321.136 175.594 307.883 177.114C294.45 178.656 282.339 168.942 280.927 155.494C279.514 142.048 289.343 130.03 302.803 128.746Z" fill="#FAF9FB"/>
+<path d="M121.307 129.18C134.444 126.873 146.973 135.625 149.329 148.752C151.685 161.88 142.982 174.443 129.863 176.849C116.673 179.269 104.028 170.509 101.659 157.309C99.2895 144.11 108.099 131.498 121.307 129.18Z" fill="#FAF9FB"/>
+<path d="M232.582 343.117C269.314 339.824 301.731 366.998 304.903 403.739C308.074 440.482 280.793 472.809 244.041 475.859C207.46 478.895 175.316 451.769 172.16 415.198C169.003 378.628 196.023 346.394 232.582 343.117Z" fill="#FAF9FB"/>
+<path d="M237.808 364.773C239.896 366.166 239.995 371.302 240.338 373.864C243.559 397.927 256.906 406.137 279.484 408.509C274.768 409.951 269.219 410.719 264.223 412.315C248.318 417.4 241.451 428.893 239.876 445.016C239.687 446.95 239.482 452.09 238.365 453.438L237.553 452.608C235.161 430.061 229.809 413.865 203.512 410.733C201.271 410.466 196.048 410.99 194.575 410.193L194.542 408.945C196.13 407.319 208.412 407.165 212.649 405.611C232.82 398.207 235.509 384.265 237.808 364.773Z" fill="#26B363"/>
+<path d="M570.468 493.909L681.489 494.062L681.402 574.316L570.758 574.487L570.468 493.909Z" fill="#FAF9FB"/>
+<path d="M144.395 493.957L246.953 493.852L247.016 574.191L240.692 574.213L137.863 574.395L137.921 494.072L144.395 493.957Z" fill="#FAF9FB"/>
+<path d="M573.594 583.217C609.372 583.181 645.536 582.906 681.292 583.368C681.312 591.842 681.735 659.577 680.723 661.153L678.835 661.292L570.777 661.35C570.705 641.122 570.455 605.607 570.653 584.059C570.861 583.816 571.068 583.574 571.274 583.331L573.594 583.217Z" fill="#FAF9FB"/>
+<path d="M170.48 583.23C196.017 583.026 221.556 582.994 247.094 583.133L246.907 661.295L213.952 661.231L137.923 661.345L137.89 583.453C148.645 583.245 159.703 583.294 170.48 583.23Z" fill="#FAF9FB"/>
+<path d="M308.299 371.332C323.39 370.485 343.386 371.02 358.719 371.055L443.861 371.119C522.301 371.054 603.06 370.159 681.382 371.387C681.519 396.813 681.512 422.239 681.362 447.666L316.95 447.955L307.434 447.929C310.31 444.204 311.025 441.549 312.473 437.146L671.03 437.462L670.932 381.798C631.16 381.256 590.554 381.934 550.702 381.974L312.789 382.125C311.295 378.857 309.237 374.703 308.299 371.332Z" fill="#FAF9FB"/>
+<path d="M358.458 493.89L460.72 494.023L460.704 574.346L358.094 574.303L358.458 493.89Z" fill="#FAF9FB"/>
+<path d="M376.243 583.222C404.399 583.019 432.556 582.98 460.713 583.107L460.74 661.388L442.606 661.398L358.428 661.351L358.206 583.395L376.243 583.222Z" fill="#FAF9FB"/>
+<path d="M255.957 493.843C286.502 493.853 319.225 493.274 349.63 494.027L349.657 574.271C318.759 573.887 287.004 574.273 256.047 574.246C255.478 547.915 255.956 520.324 255.957 493.843Z" fill="#FAF9FB"/>
+<path d="M469.692 493.892C499.888 493.939 531.898 493.393 561.949 493.977L562.265 574.417C554.747 574.969 540.025 574.498 532.076 574.5L469.606 574.43L469.692 493.892Z" fill="#FAF9FB"/>
+<path d="M255.783 583.102C286.806 583.082 318.456 582.804 349.449 583.283L349.386 661.298L256.141 661.51C255.811 635.375 255.692 609.238 255.783 583.102Z" fill="#FAF9FB"/>
+<path d="M469.369 583.123C500.269 582.981 531.171 583.081 562.069 583.424C562.253 609.375 562.299 635.325 562.207 661.277L469.234 661.43L469.369 583.123Z" fill="#FAF9FB"/>
+<path d="M137.549 374.449L167.609 374.453C166.152 377.678 164.232 382.243 162.464 385.145L148.442 384.983C148.67 402.611 148.713 420.241 148.57 437.87L160.886 437.664C161.474 437.64 162.475 437.542 162.911 437.869C164.756 439.251 167.586 446.398 168.545 448.486C158.384 448.675 147.883 448.571 137.694 448.602C137.198 424.27 137.523 398.839 137.549 374.449Z" fill="#FAF9FB"/>
+</svg>
+
+                Passwort Generator
             </h1>
             <p class="text-base md:text-lg text-base-content/70 mb-2">
                 <strong>Kostenloser Passwort Generator</strong> – Generate password sicher und offline
@@ -608,7 +641,7 @@
                 const blob = new Blob([modifiedCode], { type: 'application/javascript' });
                 const moduleUrl = URL.createObjectURL(blob);
                 const module = await import(moduleUrl);
-                
+
                 new module.default({
                     target: document.getElementById('app')
                 });
@@ -623,4 +656,5 @@
         initApp();
     </script>
 </body>
+
 </html>

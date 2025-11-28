@@ -33,6 +33,8 @@ RUN npm install -g html-minifier-terser && \
 FROM nginx:alpine
 # Copy minified HTML (or fallback to original if minification failed)
 COPY --from=builder /build/index.min.html /usr/share/nginx/html/index.html
+# Copy favicon
+COPY favicon.ico /usr/share/nginx/html/favicon.ico
 # Copy custom nginx configuration (replaces default)
 COPY nginx.conf /etc/nginx/nginx.conf
 # Remove default config to avoid conflicts
