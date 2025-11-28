@@ -2,7 +2,7 @@
 # Multi-stage build: minify HTML, then serve with nginx
 
 # Build stage: Minify HTML (only index.html needed - no build process)
-FROM node:20-alpine AS builder
+FROM node:25-alpine AS builder
 WORKDIR /build
 COPY index.html .
 RUN npm install -g html-minifier-terser && \
