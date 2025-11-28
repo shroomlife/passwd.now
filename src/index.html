@@ -3,24 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sicherer Passwort Generator | Kostenlos &amp; Offline | Starke Passwörter erstellen</title>
+    <title>Passwort Generator - Kostenlos &amp; Sicher | Generate Password Online</title>
     
     <!-- SEO Meta Tags -->
-    <meta name="description" content="Generiere kryptographisch sichere Passwörter kostenlos und offline. Mit Entropie-Anzeige, QR-Code Export und anpassbaren Zeichentypen. Keine Daten werden übertragen.">
-    <meta name="keywords" content="Passwort Generator, Password Generator, sichere Passwörter, Passwort erstellen, Zufallspasswort, Kennwort Generator, starkes Passwort, Passwort Sicherheit, Online Passwort Generator, kostenlos">
+    <meta name="description" content="Passwort Generator: Generiere sichere Passwörter kostenlos online. Generate password mit kryptographisch sicherer Zufallsgenerierung. 100% offline, keine Datenübertragung.">
+    <meta name="keywords" content="passwort generator, generate password, password generator, passwort erstellen, sichere passwörter, online passwort generator, kostenlos passwort generator, passwort generieren, sicherer passwort generator, zufallspasswort, kennwort generator, starkes passwort, passwort sicherheit">
     <meta name="author" content="Password Generator App">
-    <meta name="robots" content="index, follow">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+    <!-- Canonical URL: Wenn Domain bekannt, hier hinzufügen: <link rel="canonical" href="https://example.com/"> -->
     
     <!-- Open Graph -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Sicherer Passwort Generator | Kostenlos &amp; Offline">
-    <meta property="og:description" content="Generiere kryptographisch sichere Passwörter mit Entropie-Anzeige und QR-Code Export. 100% lokal, keine Datenübertragung.">
+    <meta property="og:title" content="Passwort Generator - Kostenlos &amp; Sicher | Generate Password">
+    <meta property="og:description" content="Passwort Generator: Generiere sichere Passwörter kostenlos online. Generate password mit kryptographisch sicherer Zufallsgenerierung. 100% offline, keine Datenübertragung.">
     <meta property="og:locale" content="de_DE">
+    <meta property="og:locale:alternate" content="en_US">
     
     <!-- Twitter -->
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="Sicherer Passwort Generator | Kostenlos &amp; Offline">
-    <meta name="twitter:description" content="Generiere kryptographisch sichere Passwörter mit Entropie-Anzeige und QR-Code Export. 100% lokal.">
+    <meta name="twitter:title" content="Passwort Generator - Kostenlos &amp; Sicher | Generate Password">
+    <meta name="twitter:description" content="Passwort Generator: Generiere sichere Passwörter kostenlos online. Generate password sicher und offline.">
     
     <!-- Theme Color -->
     <meta name="theme-color" content="#a991f7">
@@ -30,15 +32,117 @@
     {
         "@context": "https://schema.org",
         "@type": "WebApplication",
-        "name": "Sicherer Passwort Generator",
-        "description": "Kostenloser Online Passwort Generator mit kryptographisch sicherer Zufallsgenerierung.",
+        "name": "Passwort Generator",
+        "alternateName": "Password Generator",
+        "description": "Kostenloser Online Passwort Generator mit kryptographisch sicherer Zufallsgenerierung. Generate password sicher und offline.",
         "applicationCategory": "SecurityApplication",
         "operatingSystem": "Any",
+        "browserRequirements": "Requires JavaScript. Requires HTML5.",
+        "softwareVersion": "1.0",
         "offers": {
             "@type": "Offer",
             "price": "0",
             "priceCurrency": "EUR"
-        }
+        },
+        "featureList": [
+            "Kryptographisch sichere Zufallsgenerierung",
+            "Anpassbare Passwortlänge (4-256 Zeichen)",
+            "Entropie-Anzeige",
+            "QR-Code Export",
+            "100% offline, keine Datenübertragung"
+        ]
+    }
+    </script>
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "Was macht ein Passwort sicher?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Ein sicheres Passwort zeichnet sich durch drei Hauptmerkmale aus: Länge (mindestens 12-16 Zeichen), Komplexität (Groß- und Kleinbuchstaben, Zahlen, Sonderzeichen) und Zufälligkeit (keine Wörter, Namen oder Muster). Je länger und zufälliger, desto besser."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Was bedeutet Entropie bei Passwörtern?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Entropie misst die Unvorhersagbarkeit eines Passworts in Bits. Je höher die Entropie, desto mehr Versuche braucht ein Angreifer. Richtwerte: 40 Bits = schwach, 60 Bits = gut, 80 Bits = stark, 128+ Bits = exzellent (unknackbar)."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Warum ist dieser Generator sicher?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Wir nutzen crypto.getRandomValues() - die kryptographisch sichere Zufallsquelle deines Betriebssystems. Zusätzlich verwenden wir Rejection Sampling um Modulo-Bias zu eliminieren. Alles läuft 100% lokal - keine Daten werden übertragen."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Wie lang sollte mein Passwort sein?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Empfehlung: 12-16 Zeichen für normale Accounts, 20+ Zeichen für wichtige Accounts (E-Mail, Banking), 32+ Zeichen für Master-Passwörter. Mit einem Passwort-Manager kannst du problemlos 64+ Zeichen verwenden."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Sollte ich Sonderzeichen verwenden?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Ja, wenn möglich! Sonderzeichen erhöhen die Zeichenpool-Größe erheblich. Allerdings: Ein längeres Passwort ohne Sonderzeichen kann sicherer sein als ein kurzes mit Sonderzeichen."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Wozu dient der QR-Code?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Der QR-Code ermöglicht sichere Offline-Übertragung auf andere Geräte. Statt das Passwort über unsichere Kanäle zu kopieren, scannst du einfach den QR-Code mit deinem Handy."
+                }
+            }
+        ]
+    }
+    </script>
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": "Wie generiere ich ein sicheres Passwort?",
+        "description": "Schritt-für-Schritt Anleitung zum Generieren eines sicheren Passworts mit dem Passwort Generator.",
+        "step": [
+            {
+                "@type": "HowToStep",
+                "position": 1,
+                "name": "Passwortlänge wählen",
+                "text": "Wähle die gewünschte Passwortlänge zwischen 4 und 256 Zeichen. Empfohlen: mindestens 12-16 Zeichen für normale Accounts."
+            },
+            {
+                "@type": "HowToStep",
+                "position": 2,
+                "name": "Zeichentypen auswählen",
+                "text": "Aktiviere die gewünschten Zeichentypen: Großbuchstaben, Kleinbuchstaben, Zahlen und optional Sonderzeichen."
+            },
+            {
+                "@type": "HowToStep",
+                "position": 3,
+                "name": "Passwort generieren",
+                "text": "Das Passwort wird automatisch generiert. Die Entropie-Anzeige zeigt die Sicherheit des Passworts an."
+            },
+            {
+                "@type": "HowToStep",
+                "position": 4,
+                "name": "Passwort kopieren oder QR-Code erstellen",
+                "text": "Kopiere das generierte Passwort in die Zwischenablage oder erstelle einen QR-Code für sichere Offline-Übertragung."
+            }
+        ]
     }
     </script>
     
@@ -197,6 +301,19 @@
 <main class="min-h-screen bg-base-200 py-8 px-4">
     <div class="max-w-2xl mx-auto flex flex-col gap-8">
         
+        <!-- Hero Section -->
+        <header class="text-center mb-4">
+            <h1 class="text-3xl md:text-4xl font-bold text-base-content mb-3">
+                🔐 Passwort Generator
+            </h1>
+            <p class="text-base md:text-lg text-base-content/70 mb-2">
+                <strong>Kostenloser Passwort Generator</strong> – Generate password sicher und offline
+            </p>
+            <p class="text-sm text-base-content/60">
+                Kryptographisch sichere Passwörter • 100% lokal • Keine Datenübertragung
+            </p>
+        </header>
+        
         <!-- Generator Card -->
         <article class="card bg-base-100 shadow-xl rounded">
             <div class="card-body p-8">
@@ -204,8 +321,8 @@
                 <!-- Header -->
                 <header class="flex justify-between items-center mb-6">
                     <div>
-                        <h1 class="text-2xl font-bold text-base-content">🔐 Password Generator</h1>
-                        <p class="text-base-content/60 text-sm mt-1">Sichere Passwörter mit konfigurierbarer Länge und Zeichentypen.</p>
+                        <h2 class="text-xl font-bold text-base-content">Passwort Generator</h2>
+                        <p class="text-base-content/60 text-sm mt-1">Generiere sichere Passwörter mit unserem kostenlosen Passwort Generator. Generate password sicher und offline.</p>
                     </div>
                     <button type="button" on:click={toggleTheme} class="btn btn-circle btn-ghost btn-sm" aria-label="Theme wechseln">
                         {#if isDark}
@@ -227,34 +344,34 @@
                             <label for="length-range" class="text-sm font-medium text-base-content">Passwortlänge</label>
                             <span class="badge badge-primary badge-soft">{length} Zeichen</span>
                         </div>
-                        <input type="range" id="length-range" min="4" max="256" bind:value={length} class="range range-primary range-sm w-full">
+                        <input type="range" id="length-range" min="4" max="256" bind:value={length} class="range range-primary range-sm w-full" aria-label="Passwortlänge einstellen" aria-valuemin="4" aria-valuemax="256" aria-valuenow={length}>
                         <div class="flex justify-between text-xs text-base-content/50 px-1 mt-2">
                             <span>4</span>
                             <span>64</span>
                             <span>128</span>
                             <span>256</span>
                         </div>
-                        <input type="number" bind:value={length} min="4" max="256" class="input input-bordered input-sm mt-3 w-20 rounded" aria-label="Passwortlänge">
+                        <input type="number" bind:value={length} min="4" max="256" class="input input-bordered input-sm mt-3 w-20 rounded" aria-label="Passwortlänge numerisch eingeben" aria-valuemin="4" aria-valuemax="256">
                     </div>
 
                     <!-- Character types -->
                     <fieldset>
-                        <legend class="text-sm font-medium text-base-content mb-3">Zeichentypen</legend>
+                        <legend class="text-sm font-medium text-base-content mb-3">Zeichentypen für Passwort-Generierung</legend>
                         <div class="space-y-3">
                             <label class="flex items-center gap-3 cursor-pointer">
-                                <input type="checkbox" bind:checked={useUppercase} class="checkbox checkbox-primary checkbox-sm rounded">
+                                <input type="checkbox" bind:checked={useUppercase} class="checkbox checkbox-primary checkbox-sm rounded" aria-label="Großbuchstaben für Passwort-Generierung aktivieren">
                                 <span class="text-sm">Großbuchstaben (A-Z)</span>
                             </label>
                             <label class="flex items-center gap-3 cursor-pointer">
-                                <input type="checkbox" bind:checked={useLowercase} class="checkbox checkbox-primary checkbox-sm rounded">
+                                <input type="checkbox" bind:checked={useLowercase} class="checkbox checkbox-primary checkbox-sm rounded" aria-label="Kleinbuchstaben für Passwort-Generierung aktivieren">
                                 <span class="text-sm">Kleinbuchstaben (a-z)</span>
                             </label>
                             <label class="flex items-center gap-3 cursor-pointer">
-                                <input type="checkbox" bind:checked={useNumbers} class="checkbox checkbox-primary checkbox-sm rounded">
+                                <input type="checkbox" bind:checked={useNumbers} class="checkbox checkbox-primary checkbox-sm rounded" aria-label="Ziffern für Passwort-Generierung aktivieren">
                                 <span class="text-sm">Ziffern (0-9)</span>
                             </label>
                             <label class="flex items-center gap-3 cursor-pointer">
-                                <input type="checkbox" bind:checked={useSymbols} class="checkbox checkbox-secondary checkbox-sm rounded">
+                                <input type="checkbox" bind:checked={useSymbols} class="checkbox checkbox-secondary checkbox-sm rounded" aria-label="Symbole für Passwort-Generierung aktivieren">
                                 <span class="text-sm">Symbole (!@#$%^&amp;*)</span>
                             </label>
                         </div>
@@ -272,7 +389,8 @@
                 <hr class="border-base-300 mb-6">
 
                 <!-- Password output -->
-                <section>
+                <section aria-labelledby="password-section-heading">
+                    <h2 id="password-section-heading" class="sr-only">Generiertes Passwort</h2>
                     <div class="flex justify-between items-center mb-4">
                         <label for="password-output" class="text-sm font-medium text-base-content">Generiertes Passwort</label>
                         <span class="badge badge-secondary badge-soft">{password.length} Zeichen</span>
@@ -304,11 +422,12 @@
 
                 <!-- Buttons -->
                 <div class="flex flex-wrap gap-2 mt-5">
-                    <button type="button" on:click={generate} class="btn btn-sm btn-primary flex-1 rounded gap-1.5">
+                    <button type="button" on:click={generate} class="btn btn-sm btn-primary flex-1 rounded gap-1.5" aria-label="Neues Passwort generieren">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
-                        Neu generieren
+                        <span class="block md:hidden">Generieren</span>
+                        <span class="hidden md:inline">Passwort neu generieren</span>
                     </button>
-                    <button type="button" on:click={copy} class="btn btn-sm rounded gap-1.5" class:btn-success={copied} class:btn-secondary={!copied}>
+                    <button type="button" on:click={copy} class="btn btn-sm rounded gap-1.5" class:btn-success={copied} class:btn-secondary={!copied} aria-label="Passwort in Zwischenablage kopieren">
                         {#if copied}
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
                             Kopiert!
@@ -317,9 +436,9 @@
                             Kopieren
                         {/if}
                     </button>
-                    <button type="button" on:click={makeQR} class="btn btn-sm btn-accent rounded gap-1.5">
+                    <button type="button" on:click={makeQR} class="btn btn-sm btn-accent rounded gap-1.5" aria-label="QR-Code für Passwort generieren">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" /></svg>
-                        QR
+                        QR-Code
                     </button>
                 </div>
 
@@ -331,16 +450,38 @@
                             <button type="button" on:click={() => showQR = false} class="btn btn-ghost btn-xs btn-circle" aria-label="QR-Code schließen">✕</button>
                         </div>
                         <div class="bg-white p-3 rounded">
-                            <img src={qrDataUrl} alt="QR-Code mit Passwort" width="192" height="192">
+                            <img src={qrDataUrl} alt="QR-Code mit generiertem Passwort für sichere Offline-Übertragung" width="192" height="192" loading="lazy">
                         </div>
                         <p class="text-xs text-base-content/40 mt-2 text-center">Scanne mit deinem Handy für sichere Offline-Übertragung</p>
                     </div>
                 {/if}
 
-                <!-- Footer -->
-                <footer class="text-center mt-6">
-                    <p class="text-xs text-base-content/40">
-                        Lokal generiert · Nutzt <code class="bg-base-200 px-1.5 py-0.5 rounded text-xs">crypto.getRandomValues()</code>
+                <!-- Footer / Trust Signals -->
+                <footer class="text-center mt-6 p-4 bg-success/10 rounded-lg border border-success/20">
+                    <div class="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-4 text-xs text-base-content/70">
+                        <span class="flex items-center gap-1.5">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-success" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                            </svg>
+                            <strong>100% sicher & offline</strong>
+                        </span>
+                        <span class="hidden md:inline">•</span>
+                        <span class="flex items-center gap-1.5">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-success" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                            </svg>
+                            <strong>Kryptographisch sicher</strong>
+                        </span>
+                        <span class="hidden md:inline">•</span>
+                        <span class="flex items-center gap-1.5">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-success" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <strong>Keine Datenübertragung</strong>
+                        </span>
+                    </div>
+                    <p class="text-xs text-base-content/50 mt-2">
+                        Nutzt <code class="bg-base-200 px-1.5 py-0.5 rounded text-xs">crypto.getRandomValues()</code> für kryptographisch sichere Zufallsgenerierung
                     </p>
                 </footer>
             </div>
@@ -348,7 +489,7 @@
 
         <!-- FAQ Accordion -->
         <section class="w-full" aria-labelledby="faq-heading">
-            <h2 id="faq-heading" class="text-lg font-semibold text-base-content mb-4">📚 Wissenswertes über sichere Passwörter</h2>
+            <h2 id="faq-heading" class="text-lg font-semibold text-base-content mb-4">📚 Häufige Fragen zum Passwort Generator</h2>
             
             <div class="join join-vertical w-full rounded bg-base-100 shadow-lg">
                 <details class="collapse collapse-arrow join-item border border-base-300">
