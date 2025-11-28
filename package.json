@@ -1,0 +1,10 @@
+{
+  "name": "passwd-now",
+  "version": "1.0.0",
+  "description": "Password Generator - Secure & Offline",
+  "scripts": {
+    "start": "docker-compose up -d",
+    "stop": "docker-compose down"
+  }
+}
+
