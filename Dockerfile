@@ -22,13 +22,12 @@ RUN npm install -g html-minifier-terser && \
         --keep-closing-slash \
         --preserve-line-breaks \
         --remove-empty-attributes \
-        --remove-empty-elements false \
         --remove-tag-whitespace \
         --sort-attributes \
         --sort-class-name \
         --trim-custom-fragments \
-        --input index.html \
-        --output index.min.html
+        index.html \
+        -o index.min.html
 
 # Final stage with nginx
 FROM nginx:alpine
