@@ -1,3 +1,4 @@
+.cursor
 node_modules
 .git
 .gitignore
@@ -10,3 +11,7 @@ README.*
 Thumbs.db
 .github
 OPTIMIZATIONS.md
+.dockerignore
+Dockerfile
+compose.yml
+package.json
