@@ -1,0 +1,19 @@
+{
+  "servers": {
+    "tailwindcss-server": {
+      "command": "npx",
+      "args": ["-y", "tailwindcss-mcp-server@latest"]
+    },
+    "bun": {
+      "command": "bunx",
+      "args": ["-y", "mcp-bun@latest"],
+      "env": {
+        "DISABLE_NOTIFICATIONS": "true"
+      }
+    },
+    "iconify": {
+      "command": "npx",
+      "args": ["-y", "iconify-mcp-server@latest"]
+    }
+  }
+}

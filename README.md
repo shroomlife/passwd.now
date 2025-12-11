@@ -30,7 +30,7 @@ Ein moderner, sicherer Passwort-Generator als Single-File-Webanwendung. Läuft k
 
 | Technologie | Version | Verwendung |
 |-------------|---------|------------|
-| **Svelte** | 4.x | Frontend-Framework (Browser-Kompilierung) |
+| **Alpine.js** | 3.x | Interaktivität & State-Management |
 | **Tailwind CSS** | 4.x | Utility-First CSS Framework |
 | **DaisyUI** | 5.x | Komponenten-Bibliothek |
 | **QRCode** | 1.5.3 | QR-Code Generierung |
@@ -39,7 +39,7 @@ Ein moderner, sicherer Passwort-Generator als Single-File-Webanwendung. Läuft k
 **Architektur:**
 - ✅ Single-File-Architektur (`index.html` enthält alles)
 - ✅ Alle Dependencies via CDN (kein npm/node_modules)
-- ✅ Browser-basierte Svelte-Kompilierung
+- ✅ Alpine.js für Reaktivität (kein Compiler nötig)
 - ✅ Zero Build-Prozess
 
 ---
@@ -197,12 +197,12 @@ Siehe [OPTIMIZATIONS.md](OPTIMIZATIONS.md) für Details.
 ### Lokale Entwicklung
 
 1. Öffne `index.html` im Browser
-2. Bearbeite den Svelte-Code im Template-String (Zeile ~162)
+2. Bearbeite die Logik im `<script>` Tag oder das UI direkt im HTML
 3. Lade die Seite neu – Änderungen sind sofort sichtbar
 
 ### Wichtige Hinweise
 
-- **Svelte-Escaping:** Das schließende `</script>` Tag im Svelte-Code muss escaped werden: `<\/script>`
+- **Alpine.js:** State und Logik befinden sich in `passwordGenerator()`
 - **Keine Dateiseparation:** Alles bleibt in `index.html`
 - **CDN-Versionen:** Aktualisiere die CDN-URLs im `<head>` bei Bedarf
 
@@ -306,7 +306,7 @@ Ja! Einmal geladen, funktioniert die App komplett offline. Alle Dependencies wer
 
 ## 🔗 Links & Ressourcen
 
-- **Svelte:** https://svelte.dev
+- **Alpine.js:** https://alpinejs.dev
 - **Tailwind CSS:** https://tailwindcss.com
 - **DaisyUI:** https://daisyui.com
 - **QRCode Library:** https://github.com/soldair/node-qrcode
@@ -341,7 +341,7 @@ Contributions sind willkommen! Bitte beachte:
 Entwickelt mit ❤️ für maximale Sicherheit und Privatsphäre.
 
 **Made with:**
-- Svelte 4
+- Alpine.js 3
 - Tailwind CSS 4
 - DaisyUI 5
 - QRCode.js
