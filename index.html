@@ -158,15 +158,21 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daisyui@5/daisyui.css">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
+    <!-- QRCode library via ESM -->
+    <script type="module">
+        import qrcode from 'https://cdn.jsdelivr.net/npm/qrcode/+esm';
+        window.QRCode = qrcode;
+    </script>
+
     <!-- Alpine.js - Lightweight reactivity (~15KB) -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.3/dist/cdn.min.js"></script>
 
-    <!-- QRCode library -->
-    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+    <!-- Prevent FOUC (Flash of Unstyled Content) -->
+    <style>[x-cloak] { display: none !important; }</style>
 </head>
 
 <body>
-    <div id="app" x-data="passwordGenerator()" x-init="generate()">
+    <div id="app" x-cloak x-data="passwordGenerator()" x-init="generate()">
         <main class="min-h-screen bg-base-200 py-8 px-4">
             <div class="max-w-2xl mx-auto flex flex-col gap-8">
 
@@ -630,14 +636,21 @@
                 async makeQR() {
                     if (!this.password) return;
                     try {
-                        this.qrDataUrl = await QRCode.toDataURL(this.password, {
+                        // QRCode library exposes itself as window.QRCode
+                        const qr = window.QRCode;
+                        if (!qr) {
+                            this.error = 'QR-Code Bibliothek nicht geladen';
+                            return;
+                        }
+                        this.qrDataUrl = await qr.toDataURL(this.password, {
                             width: 200,
                             margin: 2,
                             color: { dark: '#000000', light: '#ffffff' }
                         });
                         this.showQR = true;
                     } catch (e) {
-                        this.error = 'QR-Code Generierung fehlgeschlagen';
+                        console.error('QR Error:', e);
+                        this.error = 'QR-Code Generierung fehlgeschlagen: ' + e.message;
                     }
                 },
 
