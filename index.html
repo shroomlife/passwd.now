@@ -6,6 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Passwort Generator - Kostenlos &amp; Sicher | Generate Password Online</title>
 
+    <!-- Preconnect to CDNs for faster loading -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+
     <!-- SEO Meta Tags -->
     <meta name="description"
         content="Passwort Generator: Generiere sichere Passwörter kostenlos online. Generate password mit kryptographisch sicherer Zufallsgenerierung. 100% offline, keine Datenübertragung.">
@@ -154,21 +158,29 @@
     }
     </script>
 
-    <!-- DaisyUI + Tailwind -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daisyui@5/daisyui.css">
+    <!-- Critical CSS: Prevent FOUC -->
+    <style>
+        [x-cloak] { display: none !important; }
+        /* Critical above-the-fold styles for instant render */
+        body { margin: 0; font-family: system-ui, -apple-system, sans-serif; }
+        .min-h-screen { min-height: 100vh; }
+        .bg-base-200 { background-color: oklch(0.961151 0.008 247.896 / 1); }
+    </style>
+
+    <!-- DaisyUI CSS - high priority -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daisyui@5/daisyui.css" fetchpriority="high">
+
+    <!-- Tailwind Browser (render-blocking but required) -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
-    <!-- QRCode library via ESM -->
+    <!-- Alpine.js - defer for non-blocking load -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.3/dist/cdn.min.js"></script>
+
+    <!-- QRCode library via ESM - async module loading -->
     <script type="module">
         import qrcode from 'https://cdn.jsdelivr.net/npm/qrcode/+esm';
         window.QRCode = qrcode;
     </script>
-
-    <!-- Alpine.js - Lightweight reactivity (~15KB) -->
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.3/dist/cdn.min.js"></script>
-
-    <!-- Prevent FOUC (Flash of Unstyled Content) -->
-    <style>[x-cloak] { display: none !important; }</style>
 </head>
 
 <body>
