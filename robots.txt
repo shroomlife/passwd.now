@@ -1,0 +1,8 @@
+# passwd.now - Secure Password Generator
+# https://passwd.now
+
+User-agent: *
+Allow: /
+
+# Sitemap (optional - uncomment if you add one)
+# Sitemap: https://passwd.now/sitemap.xml

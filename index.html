@@ -219,7 +219,7 @@
                     <p class="text-base md:text-lg text-base-content/70 mb-2">
                         <strong>Kostenloser Passwort Generator</strong> – Generate password sicher und offline
                     </p>
-                    <p class="text-sm text-base-content/60">
+                    <p class="text-sm text-base-content/70">
                         Kryptographisch sichere Passwörter • 100% lokal • Keine Datenübertragung
                     </p>
                 </header>
@@ -232,7 +232,7 @@
                         <header class="flex justify-between items-center mb-6">
                             <div>
                                 <h2 class="text-xl font-bold text-base-content">Passwort Generator</h2>
-                                <p class="text-base-content/60 text-sm mt-1">Generiere sichere Passwörter mit unserem kostenlosen Passwort Generator. Generate password sicher und offline.</p>
+                                <p class="text-base-content/70 text-sm mt-1">Generiere sichere Passwörter mit unserem kostenlosen Passwort Generator. Generate password sicher und offline.</p>
                             </div>
                             <button type="button" @click="toggleTheme()" class="btn btn-circle btn-ghost btn-sm" aria-label="Theme wechseln">
                                 <template x-if="isDark">
@@ -253,10 +253,10 @@
                             <div>
                                 <div class="flex justify-between items-center mb-3">
                                     <label for="length-range" class="text-sm font-medium text-base-content">Passwortlänge</label>
-                                    <span class="badge badge-primary badge-soft" x-text="length + ' Zeichen'"></span>
+                                    <span class="badge badge-primary" x-text="length + ' Zeichen'"></span>
                                 </div>
                                 <input type="range" id="length-range" min="4" max="256" x-model="length" @input="generate()" class="range range-primary range-sm w-full" aria-label="Passwortlänge einstellen">
-                                <div class="flex justify-between text-xs text-base-content/50 px-1 mt-2">
+                                <div class="flex justify-between text-xs text-base-content/70 px-1 mt-2">
                                     <span>4</span>
                                     <span>64</span>
                                     <span>128</span>
@@ -304,7 +304,7 @@
                             <h2 id="password-section-heading" class="sr-only">Generiertes Passwort</h2>
                             <div class="flex justify-between items-center mb-4">
                                 <label for="password-output" class="text-sm font-medium text-base-content">Generiertes Passwort</label>
-                                <span class="badge badge-secondary badge-soft" x-text="password.length + ' Zeichen'"></span>
+                                <span class="badge badge-secondary" x-text="password.length + ' Zeichen'"></span>
                             </div>
                             <textarea
                                 id="password-output"
@@ -326,15 +326,15 @@
                                     <div class="h-full rounded-full transition-all duration-300" :style="'width: ' + entropyPercent + '%; background-color: ' + barColor"></div>
                                 </div>
                                 <div class="flex justify-between items-center mt-2">
-                                    <span class="text-xs text-base-content/60" x-text="entropyEmoji + ' ' + entropyLabel"></span>
-                                    <span class="text-xs text-base-content/40" x-text="poolSize + ' Zeichen im Pool'"></span>
+                                    <span class="text-xs text-base-content/70" x-text="entropyEmoji + ' ' + entropyLabel"></span>
+                                    <span class="text-xs text-base-content/70" x-text="poolSize + ' Zeichen im Pool'"></span>
                                 </div>
                             </div>
                         </section>
 
                         <!-- Buttons -->
                         <div class="flex flex-wrap gap-2 mt-5">
-                            <button type="button" @click="generate()" class="btn btn-sm btn-primary flex-1 rounded gap-1.5" aria-label="Neues Passwort generieren">
+                            <button type="button" @click="generate()" class="btn btn-sm btn-primary flex-1 rounded gap-1.5" aria-label="Passwort neu generieren">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
                                 <span class="block md:hidden">Generieren</span>
                                 <span class="hidden md:inline">Passwort neu generieren</span>
@@ -369,7 +369,7 @@
                                 <div class="bg-white p-3 rounded">
                                     <img :src="qrDataUrl" alt="QR-Code mit generiertem Passwort für sichere Offline-Übertragung" width="192" height="192" loading="lazy">
                                 </div>
-                                <p class="text-xs text-base-content/40 mt-2 text-center">Scanne mit deinem Handy für sichere Offline-Übertragung</p>
+                                <p class="text-xs text-base-content/70 mt-2 text-center">Scanne mit deinem Handy für sichere Offline-Übertragung</p>
                             </div>
                         </template>
 
@@ -397,7 +397,7 @@
                                     <strong>Keine Datenübertragung</strong>
                                 </span>
                             </div>
-                            <p class="text-xs text-base-content/50 mt-2">
+                            <p class="text-xs text-base-content/70 mt-2">
                                 Nutzt <code class="bg-base-200 px-1.5 py-0.5 rounded text-xs">crypto.getRandomValues()</code> für kryptographisch sichere Zufallsgenerierung
                             </p>
                         </footer>
@@ -452,7 +452,7 @@
                         </details>
                     </div>
 
-                    <p class="text-xs text-base-content/40 text-center mt-6">
+                    <p class="text-xs text-base-content/70 text-center mt-6">
                         Tipp: Nutze einen Passwort-Manager um deine sicheren Passwörter zu speichern.
                     </p>
                 </section>
@@ -589,11 +589,11 @@
                 },
 
                 get barColor() {
-                    if (this.entropyBits >= 128) return '#22c55e';
-                    if (this.entropyBits >= 80) return '#3b82f6';
-                    if (this.entropyBits >= 60) return '#a855f7';
-                    if (this.entropyBits >= 40) return '#eab308';
-                    return '#ef4444';
+                    if (this.entropyBits >= 128) return '#15803d';
+                    if (this.entropyBits >= 80) return '#1d4ed8';
+                    if (this.entropyBits >= 60) return '#7c3aed';
+                    if (this.entropyBits >= 40) return '#a16207';
+                    return '#dc2626';
                 },
 
                 // Methods
